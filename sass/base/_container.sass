@@ -1,0 +1,34 @@
+body
+	:font-family 'Muli', sans-serif
+	:line-height 1.5
+	:letter-spacing 1.5px
+	:color #{'{{ settings.color_body_text }}'}
+a
+	:text-decoration none
+.container
+	@extend %make-adaptive
+	:box-sizing border-box
+	:position relative
+	+display-for(xl lg md sm)
+		:margin 0 auto
+	+display-for(xs)
+		:margin 0
+		:padding 0 12px
+	&--flex
+		:display flex
+		:align-items stretch
+		:flex-direction row
+		:justify-content space-between
+		:align-content space-between
+		:flex-wrap wrap
+		:flex 1 0 50%
+	// .item
+	// 	display: flex;
+	// 	flex: 1 1 50%;
+	// 	margin: 5px;
+.left
+	:float left
+.right
+	:float right
+.margin-bottom-30
+	:margin-bottom 30px

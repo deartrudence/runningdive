@@ -1,0 +1,32 @@
+[
+  {
+    "name": "Colors",
+    "settings": [
+      {
+        "type": "color",
+        "id": "color_borders",
+        "label": "Border Colors",
+        "default": "#e5e5e5"
+      },
+      {
+        "type": "color",
+        "id": "color_body_text",
+        "label": "Body Text",
+        "default": "#2980b9"
+      }
+    ]
+  },
+  {
+    "name": "Logo",
+    "settings": [
+      {
+        "type": "image",
+        "id": "logo.png",
+        "label": "Text",
+        "max-width": 480,
+        "max-height": 200,
+        "info": "Text"
+      }
+    ]
+  }
+]

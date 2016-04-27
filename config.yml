@@ -1,0 +1,12 @@
+---
+:api_key: aa7eb3e98ddf2f5b76bc7d50c180dc0e
+:password: c6c2c1380545cbd18066d21318eece44
+:store: runningdive.myshopify.com
+:theme_id: 
+:whitelist_files:
+- layout/
+- assets/
+- config/
+- snippets/
+- templates/
+- locales/

@@ -1,0 +1,25 @@
+{% assign page = pages.frontpage %}
+
+<div class="rte index-page description">
+    {{ page.content }}
+</div>
+{% assign collection = collections.frontpage %}
+<div class="index-collection clearfix container--flex">
+  {% comment %}<h2>{{ collection.title }}</h2>{% endcomment %}
+    {% for product in collection.products | limit:6 %}
+      {% assign index = forloop.index %}
+      {% if index == 1 or index == 6 %}
+        <div class="col--two-thirds blue tall center" style="background-image: url({{ product.featured_image.src | product_img_url: 'large' }}); background-repeat: no-repeat;  background-position: center; background-size: cover;">
+        </div>
+      {% else %}
+      {% cycle 'section-group-start': '<div class="col--three">', '' %}
+      <a href="{{ product.url | within: collection }}">
+        <div class="col span_1_of_3 green short center" style="background-image: url({{ product.featured_image.src | product_img_url: 'medium' }}); background-repeat: no-repeat;  background-position: center; background-size: cover;">
+        </div>
+      </a>
+
+      {% cycle 'section-group-end': '', '</div>' %}
+      {% endif %}
+      {% comment %}{% include 'product-loop' %}{% endcomment %}
+    {% endfor %}
+</div>
