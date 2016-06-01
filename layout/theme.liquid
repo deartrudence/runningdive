@@ -9,6 +9,7 @@
   {{ "normalize.css" | asset_url | stylesheet_tag }}
   {{ "style.css" | asset_url | stylesheet_tag }}
   {{ 'styles.scss' | asset_url | stylesheet_tag }}
+  <script src="https://use.fontawesome.com/dd99ff6d97.js"></script>
   <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
 {% comment %}  <link rel="stylesheet" type="text/css" href="http://localhost:8000/styleguide/assets/styles/structure.css">
   <link rel="stylesheet" type="text/css" href="http://localhost:8000/styleguide/assets/styles/styleguide.css">{% endcomment %}
@@ -21,38 +22,41 @@
   {{ '//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js' | script_tag }}
 </head>
 <body>
-<div class="header-toolbar">
+{% comment %}<div class="header-toolbar">
     <div class="container container--flex clearfix">
-          <div class="header-search right">
-            <form action="/search" method="get" class="search-form" role="search">
-            <input name="q" type="text" class="search-field" placeholder="Search store..."/>
-            <input type="submit" class="btn " value="Search" />
-                        </form>
-          </div>
-          <div class="cart-info right">
-            Cart: <a href="/cart">{{ cart.item_count }} {{ cart.item_count | pluralize: 'item', 'items' }} ({{ cart.total_price | money }})</a>
-          </div>
+      
     </div>
-  </div>
-  <div class="container">
+  </div>{% endcomment %}
+  <div class="container container--flex">
+    <h1 class="logo"><a href="{{shop.url}}">Running Dive</br>Shop</a></h1>
     <nav class="main-menu">
        <ul>
        {% for link in linklists.main-menu.links %}
         <li {% if link.active %}class="current"{% endif %}><a href="{{ link.url }}">{{ link.title }}</a></li>
        {% endfor %}
+       <li class="cart-info"><a href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="cart-items">{{ cart.item_count }}</span></a></li>
        </ul>
       </nav>
-          <div class="center margin-bottom-30"><a href="/"><img src="{{ 'logo.png' | asset_url }}" alt="{{ shop.name }}" /></a></div>
+  </div>
+  <div class="container">
     <div class="content">
       {{ content_for_layout}}
     </div>
-    <footer>
+  </div>
+  <footer>
+    <div class="container container--flex">
+      <ul class="social-links">
+        <li><a href="#" target="_blank"><i class="fa fa-twitter"></i><span>twitter</span></a></li><!--
+        *--><li><a href="#" target="_blank"><i class="fa fa-facebook"></i><span>facebook</span></a></li><!--
+        *--><li><a href="#" target="_blank"><i class="fa fa-instagram"></i><span>instagram</span></a></li>
+      </ul>
       <ul>
         {% for link in linklists.footer.links %}
         <li><a href="{{ link.url }}">{{ link.title }}</a></li>
         {% endfor %}
       </ul>
-     </footer>
-  </div>
+      <p>Running Dive is based out of Toronto, Ontario. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo nihil perferendis numquam, vel veniam eius.</p>
+    </div>
+   </footer>
 </body>
 </html>

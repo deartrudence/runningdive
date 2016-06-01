@@ -1,10 +1,44 @@
+h1.logo	
+	:letter-spacing 6px
+	:line-height 60px
+	:border-bottom 5px solid #111
+	:padding-bottom 20px
+.cart-info
+	a 
+		:color #111
+	i 
+		:font-size 18px
+		:line-height 26px
+	.cart-items
+		:display inline-block
+		:height 26px
+		:width 26px
+		:background #5bffe6
+		:border-radius 50%
+		:text-align center
+		:line-height 26px
 .main-menu
 	:text-align center
+	:margin-top 24px
+	ul 
+		:margin 0 
+		:padding 0
 	li
 		:display inline-block
 		:padding 0px 20px
 	a
-		:color #4e4e4e
+		:color #111
 		:font-weight bold
-		&:hover, .current
-			:color #989898
+		&:before
+			:content ''
+			:display block
+			:position relative
+			:margin-top -2px
+			:width 0
+			:top 1.8em
+			:border-bottom 5px solid #5bffe6
+			:transition width .4s
+		&:hover
+			&:before
+				:width 100%
+
