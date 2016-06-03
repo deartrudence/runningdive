@@ -17,21 +17,25 @@
   </div>
   <div class="product-details col--two left">
     <h2 class="product-header">{{ product.title }}</h2>
+    <p class="price-field"></p>
     <div class="product-desc rte">{{ product.description}}</div>
     <div class="container--flex margin-bottom-30">
-      <div class="price-field col--two"></div>
       <form action="/cart/add" method="post" class="product-form">
-        <div class="product-variants col--two">
+
+          {% assign hide_default_title = true %}
+        <div class="product-variants">
           <select id="product-select" name="id">
             {% for variant in product.variants %}
-            <option value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
+              {% if product.variants.size > 1%}
+                <option value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
+              {% endif %}
             {% endfor %}
           </select>
         </div>
 
-    </div>
       <input type="submit" name="add" value="Purchase" class="btn btn--purchase margin-bottom-30" />
     </form>
+    </div>
     {% if collection %}
     <div class="product-nav clearfix">
        {% if collection.previous_product %}
