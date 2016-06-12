@@ -2,9 +2,11 @@
 <html>
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ page_title }} - {{ shop.name }}</title>
 
   {{ content_for_header }}
+
 
   {{ "normalize.css" | asset_url | stylesheet_tag }}
   {{ "style.css" | asset_url | stylesheet_tag }}
@@ -21,6 +23,89 @@
   {{ "shopify_common.js" | shopify_asset_url | script_tag }}
   {{ "customer_area.js"  | shopify_asset_url | script_tag }}
   {{ '//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js' | script_tag }}
+  {{ 'jquery.colorbox-min.js' | asset_url | script_tag }}
+
+  <script type="text/javascript">
+
+    var cartCount = {{ cart.item_count }};
+
+    $(document).ready(function(){   
+        {% if cart.item_count != 0 %}  
+           $('#cart-number').replaceWith("<a id='cart-number' href='/cart'><i class='fa fa-shopping-cart' aria-hidden='true'></i> <span class='cart-items'>" + cartCount + "</span></a>");
+        {% endif %}
+
+        $('body').on('click', '#close', function(){
+          var overlay = $('.modal--overlay')
+          closeModal(overlay)
+        })
+        $('.modal--overlay').on('click', function(){
+          var overlay = $('.modal--overlay')
+          closeModal(overlay)
+        })
+      });
+
+    function addItem(form_id) {
+        $.ajax({
+          type: 'POST',                             
+          url: '/cart/add.js',
+          dataType: 'json',                               
+          data: $('#'+form_id).serialize(),            
+          success: addToCartOk,                        
+          error: addToCartFail                            
+        });
+      }
+
+
+
+      function addToCartOk(product) { 
+        cartCount++; 
+        $('.modal').html('<span class="close" id="close">✕</span>' + product.title + ' was added to the cart!'); 
+        $('#cart-number').replaceWith("<a id='cart-number' href='/cart'><i class='fa fa-shopping-cart' aria-hidden='true'></i> <span class='cart-items'>" + cartCount + "</span></a>");
+        openModal();
+      } 
+
+      function addToCartFail(obj, status) { 
+        $('.modal').html('<span class="close" id="close">✕</span> The product you are trying to add is out of stock.'); 
+        openModal()
+      } 
+
+      //Modal Actions
+      //center modal so that it is not off pixel
+      function centerModal(){
+        var modal = $('.modal.open');
+        var mWidth = modal.outerWidth()
+        var mHeight = modal.outerHeight();
+        var width = $(window).width();
+        var height = $(window).height();
+        if((width % 1) != 0){
+          width = Math.round(width)
+        }
+        if((height % 1) != 0){
+          height = Math.round(height)
+        }
+        var topPos = (height / 2) - (mHeight / 2);
+        var leftPos = (width / 2) - (mWidth / 2);
+        modal.css({top: topPos, left:leftPos})
+
+      }
+
+      //open modal and overlay
+      function openModal(){
+        $('.modal').removeClass('hidden').addClass('open');
+        $('.modal--overlay').removeClass('hidden').addClass('open');
+        $('body').css('overflow', 'hidden');
+        centerModal();
+      }
+
+      //close modal and overlay
+      function closeModal(overlay){
+        $(overlay).addClass('hidden').removeClass('open');
+        $('.modal.open').addClass('hidden').removeClass('open');
+        $('body').css('overflow', 'auto');
+      }
+
+ 
+  </script>
 </head>
 <body>
 {% comment %}<div class="header-toolbar">
@@ -35,7 +120,7 @@
        {% for link in linklists.main-menu.links %}
         <li {% if link.active %}class="current"{% endif %}><a href="{{ link.url }}">{{ link.title }}</a></li>
        {% endfor %}
-       <li class="cart-info"><a href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="cart-items">{{ cart.item_count }}</span></a></li>
+       <li class="cart-info"><a id="cart-number" href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="cart-items">{{ cart.item_count }}</span></a></li>
        </ul>
       </nav>
   </header>
