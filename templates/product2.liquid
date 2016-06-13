@@ -1,5 +1,3 @@
-<div class="modal hidden" id="download-modal"></div>
-<div class="modal--overlay hidden"></div>
 <div class="product-page margin-bottom-30 container--flex clearfix">
   <div class="product-images col--two left">
     <div class="product-featured-image">
@@ -22,7 +20,8 @@
     <p class="price-field">{{product.price | money }}</p>
     <div class="product-desc rte">{{ product.description}}</div>
     <div class="container--flex margin-bottom-30">
-      <form action="/cart/add" method="post" class="product-form" id="add-to-cart">
+      <form action="/cart/add" method="post" class="product-form">
+
 
         <div class="product-variants">
           {% if product.variants.size == 1%}
@@ -40,7 +39,7 @@
           {% endif %}
         </div>
 
-      <input type="submit" name="add" value="Purchase" class="btn btn--purchase margin-bottom-30" onclick="addItem('add-to-cart'); return false; " />
+      <input type="submit" name="add" value="Purchase" class="btn btn--purchase margin-bottom-30" />
     </form>
     </div>
   {% comment %}  {% if collection %}
@@ -64,10 +63,7 @@
   {%else %}
     {%assign collection = product.collections.last %}
   {%endif%}
-<<<<<<< HEAD
-=======
   {{collection.title}}
->>>>>>> 6764deb8b8f022c40c5f49774bdd575f545ab680
 
   <p>Check out more from the {{collection.title}} collection</p>
   <a href="{{collection.url}}" class="btn">View Collection</a>

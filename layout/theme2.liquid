@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{ page_title }} - {{ shop.name }}</title>
+
+  {{ content_for_header }}
+
+  {{ "normalize.css" | asset_url | stylesheet_tag }}
+  {{ "style.css" | asset_url | stylesheet_tag }}
+  {{ 'styles.scss' | asset_url | stylesheet_tag }}
+  <script src="https://use.fontawesome.com/dd99ff6d97.js"></script>
+  <link href='https://fonts.googleapis.com/css?family=Muli:400,300' rel='stylesheet' type='text/css'>
+{% comment %}  <link rel="stylesheet" type="text/css" href="http://localhost:8000/styleguide/assets/styles/structure.css">
+  <link rel="stylesheet" type="text/css" href="http://localhost:8000/styleguide/assets/styles/styleguide.css">{% endcomment %}
+
+
+
+  {{ "option_selection.js" | shopify_asset_url | script_tag }}
+  {{ "shopify_common.js" | shopify_asset_url | script_tag }}
+  {{ "customer_area.js"  | shopify_asset_url | script_tag }}
+  {{ '//ajax.googleapis.com/ajax/libs/jquery/1.9.0/jquery.js' | script_tag }}
+</head>
+<body>
+{% comment %}<div class="header-toolbar">
+    <div class="container container--flex clearfix">
+      
+    </div>
+  </div>{% endcomment %}
+  <header class="container container--flex">
+    <h1 class="logo"><a href="{{shop.url}}">Runningdive <span>Shop</span></a></h1>
+    <nav class="main-menu">
+       <ul>
+       {% for link in linklists.main-menu.links %}
+        <li {% if link.active %}class="current"{% endif %}><a href="{{ link.url }}">{{ link.title }}</a></li>
+       {% endfor %}
+       <li class="cart-info"><a href="/cart"><i class="fa fa-shopping-cart" aria-hidden="true"></i> <span class="cart-items">{{ cart.item_count }}</span></a></li>
+       </ul>
+      </nav>
+  </header>
+  <div class="container">
+    <div class="content">
+      {{ content_for_layout}}
+    </div>
+  </div>
+  <footer>
+    <div class="container container--flex">
+      <ul class="social-links">
+        <li><a href="#" target="_blank"><i class="fa fa-twitter"></i><span>twitter</span></a></li><!--
+        *--><li><a href="#" target="_blank"><i class="fa fa-facebook"></i><span>facebook</span></a></li><!--
+        *--><li><a href="#" target="_blank"><i class="fa fa-instagram"></i><span>instagram</span></a></li>
+      </ul>
+      <ul>
+        {% for link in linklists.footer.links %}
+        <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+        {% endfor %}
+      </ul>
+      <p>Running Dive is based out of Toronto, Ontario. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo nihil perferendis numquam, vel veniam eius.</p>
+    </div>
+   </footer>
+</body>
+</html>
