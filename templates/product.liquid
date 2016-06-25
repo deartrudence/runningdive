@@ -22,7 +22,8 @@
     <p class="price-field">{{product.price | money }}</p>
     <div class="product-desc rte">{{ product.description}}</div>
     <div class="container--flex margin-bottom-30">
-      <form action="/cart/add" method="post" class="product-form" id="add-to-cart">
+      {% comment %}<form action="/cart/add" method="post" class="product-form" id="add-to-cart">{% endcomment %}
+      <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
 
         <div class="product-variants">
           {% if product.variants.size == 1%}
@@ -40,7 +41,8 @@
           {% endif %}
         </div>
 
-      <input type="submit" name="add" value="Purchase" class="btn btn--purchase margin-bottom-30" onclick="addItem('add-to-cart'); return false; " />
+      {% comment %}<input type="submit" name="add" value="Purchase" class="btn btn--purchase margin-bottom-30" onclick="addItem('add-to-cart'); return false; " />{% endcomment %}
+      <input type="submit" name="add" value="Purchase" class="btn btn--purchase margin-bottom-30" id="AddToCart" />
     </form>
     </div>
   {% comment %}  {% if collection %}
@@ -64,10 +66,6 @@
   {%else %}
     {%assign collection = product.collections.last %}
   {%endif%}
-<<<<<<< HEAD
-=======
-  {{collection.title}}
->>>>>>> 6764deb8b8f022c40c5f49774bdd575f545ab680
 
   <p>Check out more from the {{collection.title}} collection</p>
   <a href="{{collection.url}}" class="btn">View Collection</a>
