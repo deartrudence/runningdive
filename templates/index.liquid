@@ -6,7 +6,7 @@
     {% for product in collection.products | limit:6 %}
       {% assign index = forloop.index %}
       {% if index == 1 or index == 6 %}
-          <div class="col--two-thirds tall center" style="background-image: url({{ product.featured_image.src | product_img_url: 'grande' }}); background-repeat: no-repeat;  background-position: center; background-size:cover; " data-adaptive-background data-ab-css-background>
+          <div class="col--two-thirds tall center" style="background-image: url({{ product.featured_image.src | product_img_url: '750x', scale: 3 }}); background-repeat: no-repeat;  background-position: center; background-size:cover; " data-adaptive-background data-ab-css-background>
             <a href="{{ product.url | within: collection}}">
             <div class="overlay hidden">
               <div class="content">
@@ -19,7 +19,7 @@
       {% else %}
       {% cycle 'section-group-start': '<div class="col--three">', '' %}
       <a href="{{ product.url | within: collection }}">
-        <div class="col span_1_of_3 green short center" style="background-image: url({{ product.featured_image.src | product_img_url: 'grande' }}); background-repeat: no-repeat;  background-position: center; background-size: cover;" data-adaptive-background data-ab-css-background>
+        <div class="col span_1_of_3 green short center" style="background-image: url({{ product.featured_image.src | product_img_url: '750x', scale: 3 }}); background-repeat: no-repeat;  background-position: center; background-size: cover;" data-adaptive-background data-ab-css-background>
           <div class="overlay hidden">
             <div class="content">
               <h3>{{ product.title }}</h3>
