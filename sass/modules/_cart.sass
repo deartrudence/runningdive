@@ -1,4 +1,16 @@
 $white : rgba(255,255,255,0.9)
+#cart-drawer.active
+	// :display block
+	:width 300px
+	:padding 14px
+	div 
+		:display block
+#cart-drawer.closed
+	// :display none
+	:width 0
+	:padding 0
+	div
+		:display none
 .cart-table
 	:width 100%
 .cart-table
@@ -33,7 +45,8 @@ $white : rgba(255,255,255,0.9)
 	:height 100vh
 	:z-index 10
 	:right 0
-	:display none
+	:top 0
+	// :display none
 	:padding 14px
 	.ajaxcart__inner
 		:overflow scroll

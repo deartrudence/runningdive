@@ -106,7 +106,7 @@
       
     </div>
   </div>{% endcomment %}
-  <div class="drawer js-drawer-close-right" id="cart-drawer">
+  <div class="drawer js-drawer-close-right closed" id="cart-drawer">
     <div class="cart-title">
       <h2>Cart</h2>
       <span id="close_cart">×</span>
@@ -131,7 +131,7 @@
         {{ content_for_layout}}
       </div>
     </div>
-    <footer>
+    <footer >
       <div class="container container--flex">
         <ul class="social-links">
           <li><a href="#" target="_blank"><i class="fa fa-twitter"></i><span>twitter</span></a></li><!--
@@ -191,13 +191,13 @@
             //update cart without page refresh 
 
         $('#cart_open').on('click', function(){
-          $('#cart-drawer').show()
-          $('.content-container').css({'position': 'absolute', 'right': '338px'})
+          $('#cart-drawer').addClass('active').removeClass('closed')
+          // $('.content-container').css({'position': 'absolute', 'right': '338px'})
         });
         $('#close_cart').on('click', function(){
-          $('#cart-drawer').hide()
+          $('#cart-drawer').addClass('closed').removeClass('active')
           $('#cart_open').removeClass('active').addClass('closed')
-          $('.content-container').css({'position': 'static', 'right': '0'})
+          // $('.content-container').css({'position': 'static', 'right': '0'})
         })
         ajaxCart.init({
           formSelector: '#AddToCartForm',
