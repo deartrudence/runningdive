@@ -1,0 +1,55 @@
+function filterProducts(collection_id, type){
+  collection_id ? collection_id = 'collection_id=' + collection_id : collection_id = ''
+  type && type != 'all' ? type = 'product_type=' + type : type = ''
+  $.ajax({
+    type: 'GET',
+    url: '/admin/products.json?' + collection_id + '&' + type,
+    dataType: 'json',
+    success: function(res){
+     console.log(res)
+     buildProduct(res);
+    },
+    error: function(status){
+      alert(status)
+     }
+  });
+}
+
+function buildProduct(res){
+  var $productContainer = $('#js-product-container');
+  $productContainer.empty();
+  var products = [],
+      product = {}, 
+      data = {}, 
+      source = $("#ProductTemplate").html(),
+      template = Handlebars.compile(source),
+      money_format = {{ shop.money_focrmat | json }}
+  $.each(res.products, function(index, productItem) {
+    var description = productItem.body_html.replace(/<\/?[^>]+(>|$)/g, "").split(' ').splice(0, 25).join(' ');
+    // Create item's data object and add to 'items' array
+    product = {
+      title: productItem.title, 
+      price: Shopify.formatMoney(productItem.variants[0].price, {{ shop.money_format | json }}),
+      featuredImg: productItem.image.src,
+      description: description,
+      id: productItem.id
+    };
+   
+    products.push(product);
+  }); 
+  data = {
+   products: products
+  } 
+
+  $productContainer.append(template(data));      
+
+}
+
+$(function(){
+    $('.js-collection-filter').on('change', function(){
+      var type = $(this).val()
+      console.log(type)
+      var collection_id = $(this).data('collection')
+      filterProducts(collection_id, type)
+    });
+});

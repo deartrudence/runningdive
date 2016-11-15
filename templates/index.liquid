@@ -6,26 +6,18 @@
     {% for product in collection.products | limit:6 %}
       {% assign index = forloop.index %}
       {% if index == 1 or index == 6 %}
-          <div class="col--two-thirds tall center" style="background-image: url({{ product.featured_image.src | product_img_url: '750x', scale: 3 }}); background-repeat: no-repeat;  background-position: center; background-size:cover; " data-adaptive-background data-ab-css-background>
+      {% comment %}{{ product.featured_image.src | product_img_url: '750x', scale: 3 }}{% endcomment %}
+        {% comment %}<img src="" alt="">{% endcomment %}
+          <div class="col--two-thirds tall center front-page-image" data-image="{{ product.featured_image.src | product_img_url: '500x', scale: 3 }}" style="background-image: url({{ product.images[1].src | | product_img_url: '750x'}}); background-repeat: no-repeat;  background-position: center center; background-size:cover; " data-adaptive-background data-ab-css-background>
             <a href="{{ product.url | within: collection}}">
-            <div class="overlay hidden">
-              <div class="content">
-                <h3>{{ product.title }}</h3>
-                <p>{{ product.price | money }}</p>
-              </div>
-            </div>
+              <div class="overlay hidden"></div>
             </a>
           </div>
       {% else %}
       {% cycle 'section-group-start': '<div class="col--three">', '' %}
       <a href="{{ product.url | within: collection }}">
         <div class="col span_1_of_3 green short center" style="background-image: url({{ product.featured_image.src | product_img_url: '750x', scale: 3 }}); background-repeat: no-repeat;  background-position: center; background-size: cover;" data-adaptive-background data-ab-css-background>
-          <div class="overlay hidden">
-            <div class="content">
-              <h3>{{ product.title }}</h3>
-              <p>{{ product.price | money }}</p>
-            </div>
-          </div>
+          <div class="overlay hidden"></div>
         </div>
       </a>
 
@@ -88,7 +80,7 @@
         */
         $( opts.selector ).each(function(index, el){
           var $this = $(this);
-
+          console.log($this)
           /*  Small helper functions which applies
               colors, attrs, triggers events, etc.
           */
@@ -115,16 +107,18 @@
             var str = $this.css('background-image');
             var regex = /\(([^)]+)\)/;
             var match = regex.exec(str)[1].replace(/"/g, '')
+            console.log(match)
             return match;
           };
 
           /* Subscribe to our color-found event. */
           $this.on( EVENT_CF, function(ev, data){
+            console.log(ev, 'the event')
             var hex = rgb2hex(data.color)
             hex = hex.substr(1)
             console.log(hex)
             var decimal = parseInt(hex, 16);
-            console.log(decimal)
+            console.log(decimal, 'happening??')
             
             // Try to find the parent.
             var $parent;
@@ -187,12 +181,24 @@
   })(jQuery);
 
   $(document).ready(function(){
-    $.adaptiveBackground.run();
+    // $.adaptiveBackground.run();
     $('.col--two-thirds, .col').on('mouseenter', function(){
       $(this).find('.overlay').fadeIn(200).removeClass('hidden')
+      var image = $(this).data('image')
+      var original_image = $(this).css('background-image')
+      bg = original_image.replace('url(','').replace(')','').replace(/\"/gi, "");
+      $(this).data('image', bg)
+      $(this).css('background-image',"url(" + image + ")");
+      $(this).css('background-size', 'contain')
     })
     $('.col--two-thirds, .col').on('mouseleave', function(){
       $(this).find('.overlay').fadeOut(200).addClass('hidden')
+      var image = $(this).data('image')
+      var original_image = $(this).css('background-image')
+      bg = original_image.replace('url(','').replace(')','').replace(/\"/gi, "");
+      $(this).data('image', bg)
+      $(this).css('background-image',"url(" + image + ")");
+      $(this).css('background-size', 'cover')
     })
   });
 </script>

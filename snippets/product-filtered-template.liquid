@@ -1,0 +1,13 @@
+<script id="ProductTemplate" type="text/template">
+  {% raw %}
+    {{#products}}
+
+      <img src="{{ featuredImg }}" alt="{{title}}">
+      <h2>{{title}}</h2>
+      <p>{{price}}</p>
+      <div class="description">
+      	{{description}}
+      </div>
+    {{/products}}
+  {% endraw %}
+</script>

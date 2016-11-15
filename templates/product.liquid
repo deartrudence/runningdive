@@ -7,7 +7,7 @@
         <img src="{{ product.featured_image.src | product_img_url: '750x', scale: 3 }}" alt="{{ product.featured_image.alt | escape }}" />
       </a>
     </div>
-    <div class="product-img-list clearfix">
+{% comment %}    <div class="product-img-list clearfix">
       {% for image in product.images | offset:1 %}
       <div class="product-img left {% cycle '','','last' %}">
         <a href="{{ image.src | product_img_url: 'original' }}">
@@ -15,7 +15,7 @@
         </a>
       </div>
       {% endfor %}
-    </div>
+    </div>{% endcomment %}
   </div>
   <div class="product-details col--two left">
     <h2 class="product-header">{{ product.title }}</h2>
@@ -26,7 +26,7 @@
       <form action="/cart/add" method="post" enctype="multipart/form-data" id="AddToCartForm">
 
         <div class="product-variants">
-          {% if product.variants.size == 1%}
+          {% if product.variants.size == 1 %}
             <label for="product-select-option-0"></label>
             <input type="hidden" value="{{ product.variants.first.id }}" id="product-select-option-0" name="id">
           {% else%}
@@ -61,11 +61,13 @@
 </div>
 <div class="collection-section">
   
-  {%if product.collections.first.title != 'Home page'%}
+ {% comment %} {%if product.collections.first.title != 'Home page'%}
    {%assign collection = product.collections.first%}
   {%else %}
     {%assign collection = product.collections.last %}
-  {%endif%}
+  {%endif%}{% endcomment %}
+
+  {% assign collection = collections['phone-cases'] %}
 
   <p>Check out more from the {{collection.title}} collection</p>
   <a href="{{collection.url}}" class="btn">View Collection</a>

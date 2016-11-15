@@ -28,15 +28,15 @@
         "info": "Text"
       }
     ]
-  }, 
+  },
   {
-    "name" : "About Us", 
+    "name": "About Us",
     "settings": [
       {
-        "type": "image", 
-        "id" : "about.png", 
-        "label" : "About Image", 
-        "max-width" : 700, 
+        "type": "image",
+        "id": "about.png",
+        "label": "About Image",
+        "max-width": 700,
         "info": "This image will show up on the About Us Page"
       }
     ]
