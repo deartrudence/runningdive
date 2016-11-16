@@ -5,8 +5,15 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>{{ page_title }} - {{ shop.name }}</title>
 
+  <!-- Social Meta tags -->
+
+  {% include 'social-meta-tags' %}
+
+  <!-- Content for header -->
+
   {{ content_for_header }}
 
+  <!-- assets -->
 
   {{ "normalize.css" | asset_url | stylesheet_tag }}
   {{ "style.css" | asset_url | stylesheet_tag }}
@@ -143,7 +150,7 @@
           <li><a href="{{ link.url }}">{{ link.title }}</a></li>
           {% endfor %}
         </ul>
-        <p>Running Dive is based out of Toronto, Ontario. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo nihil perferendis numquam, vel veniam eius.</p>
+        <p>running is based out of Toronto, Ontario. Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo nihil perferendis numquam, vel veniam eius.</p>
       </div>
      </footer>
   </div>

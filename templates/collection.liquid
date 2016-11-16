@@ -1,4 +1,4 @@
-{% paginate collection.products by 8 %}
+{% paginate collection.products by 9 %}
 <div class="clearfix">
   <h2>{{ collection.title }}</h2>
   <div class="collection-desc rte">
@@ -43,8 +43,8 @@
         dark:       "#000"
       },
       lumaClasses:  {
-        light:      "ab-light",
-        dark:       "ab-dark"
+        light:      "light",
+        dark:       "dark"
       }
     };
 
@@ -80,7 +80,6 @@
           */
           var handleColors = function () {
             var img = useCSSBackground() ? getCSSBackground() : $this[0];
-
             RGBaster.colors(img, {
               paletteSize: 20,
               exclude: opts.exclude,
@@ -88,13 +87,15 @@
                 goodColor = getGoodColor(colors.palette);
                 $this.attr(DATA_COLOR, goodColor);
                 $this.trigger(EVENT_CF, { color: goodColor, palette: colors.palette });
-                console.log(colors)
               }
             });
 
           };
 
           var getGoodColor = function(colors){
+            /*  Gets all colors from palette and removes all the greys
+                will return the first color of there are only grey
+            */
             new_colors = colors.filter(function(color){
               array = color.slice(4,-1).split(',');
               return !array.reduce(function(a, b){ return (a === b) ? a : NaN; });
@@ -109,11 +110,13 @@
           };
 
         var getCSSBackground = function(){
-          var str = $this.css('background-image');
-          var regex = /\(([^)]+)\)/;
-          var match = regex.exec(str)[1].replace(/"/g, '')
-          console.log(match)
-          return match;
+          // var str = $this.css('background-image');
+          var str = $this.attr('src');
+          str = "https:".concat(str)
+          // var regex = /\(([^)]+)\)/;
+          // var match = regex.exec(str)[1].replace(/"/g, '')
+          // return match;
+          return str
         };
 
 
@@ -121,35 +124,41 @@
           $this.on( EVENT_CF, function(ev, data){
             var hex = rgb2hex(data.color)
             hex = hex.substr(1)
-            console.log(hex)
+            // console.log(hex)
             var decimal = parseInt(hex, 16);
-            console.log(decimal)
+            // console.log(decimal)
             
             // Try to find the parent.
-            var $parent;
-            if ( opts.parent && $this.parents( opts.parent ).length ) {
-              $parent = $this.parents( opts.parent );
-            }
-            else if ( $this.attr( DATA_PARENT ) && $this.parents( $this.attr( DATA_PARENT ) ).length ){
-              $parent = $this.parents( $this.attr( DATA_PARENT ) );
-            }
-            else if ( useCSSBackground() ){
-              $parent = $this.find('.overlay');
-              if(decimal < (16777215 / 2)){
-                $parent.addClass('dark')
-              }else{
-                $parent.addClass('light')
-              }
+            // var $parent;
+            // if ( opts.parent && $this.parents( opts.parent ).length ) {
+            //   $parent = $this.parents( opts.parent );
+            // }
+            // else if ( $this.attr( DATA_PARENT ) && $this.parents( $this.attr( DATA_PARENT ) ).length ){
+            //   $parent = $this.parents( $this.attr( DATA_PARENT ) );
+            // }
+            // else if ( useCSSBackground() ){
+            //   $parent = $this.find('.overlay');
+            //   if(decimal < (16777215 / 2)){
+            //     $parent.addClass('dark')
+            //   }else{
+            //     $parent.addClass('light')
+            //   }
               
-            }
-            else if (opts.parent) {
-              $parent = $this.parents( opts.parent );
-            }
-            else {
-              $parent = $this.parent();
-            }
+            // }
+            // else if (opts.parent) {
+            //   $parent = $this.parents( opts.parent );
+            // }
+            // else {
+            //   $parent = $this.parent();
+            // }
 
-            $parent.css({ backgroundColor: data.color});
+            // console.log($parent.next(), 'parent')
+            // console.log($this.next(), 'this')
+
+            /*
+              Since not using background image, changed from parent to next sibling
+            */
+            $this.next().css({ backgroundColor: data.color});
 
             // Helper function to calculate yiq - http://en.wikipedia.org/wiki/YIQ
             var getYIQ = function(color){
@@ -167,14 +176,15 @@
 
             // Normalize the text color based on luminance.
             if ( opts.normalizeTextColor )
-              $parent.css({ color: getNormalizedTextColor(data.color) });
+              $this.next().css({ color: getNormalizedTextColor(data.color) });
 
             // Add a class based on luminance.
-            $parent.addClass( getLumaClass(data.color) )
+            $this.next().addClass( getLumaClass(data.color) )
                    .attr('data-ab-yaq', getYIQ(data.color));
 
             opts.success && opts.success($this, data);
           });
+
 
           /* Handle the colors. */
           handleColors();

@@ -16,7 +16,7 @@
       {% else %}
       {% cycle 'section-group-start': '<div class="col--three">', '' %}
       <a href="{{ product.url | within: collection }}">
-        <div class="col span_1_of_3 green short center" style="background-image: url({{ product.featured_image.src | product_img_url: '750x', scale: 3 }}); background-repeat: no-repeat;  background-position: center; background-size: cover;" data-adaptive-background data-ab-css-background>
+        <div class="col span_1_of_3 green short center front-page-image" data-image="{{ product.featured_image.src | product_img_url: '500x', scale: 3 }}" style="background-image: url({{ product.images[1].src | product_img_url: '750x', scale: 3 }}); background-repeat: no-repeat;  background-position: center; background-size: cover;" data-adaptive-background data-ab-css-background>
           <div class="overlay hidden"></div>
         </div>
       </a>
@@ -46,7 +46,7 @@
       normalizeTextColor:   false,
       normalizedTextColors:  {
         light:      "#fff",
-        dark:       "#000"
+        dark:       "#444"
       },
       lumaClasses:  {
         light:      "ab-light",
@@ -91,6 +91,7 @@
               paletteSize: 20,
               exclude: opts.exclude,
               success: function(colors) {
+                goodColor = colors.dominant
                 $this.attr(DATA_COLOR, colors.dominant);
                 $this.trigger(EVENT_CF, { color: colors.dominant, palette: colors.palette });
               }
@@ -118,6 +119,7 @@
             hex = hex.substr(1)
             console.log(hex)
             var decimal = parseInt(hex, 16);
+            console.log(data.color, 'it is')
             console.log(decimal, 'happening??')
             
             // Try to find the parent.
@@ -188,8 +190,8 @@
       var original_image = $(this).css('background-image')
       bg = original_image.replace('url(','').replace(')','').replace(/\"/gi, "");
       $(this).data('image', bg)
-      $(this).css('background-image',"url(" + image + ")");
       $(this).css('background-size', 'contain')
+      $(this).css('background-image',"url(" + image + ")");
     })
     $('.col--two-thirds, .col').on('mouseleave', function(){
       $(this).find('.overlay').fadeOut(200).addClass('hidden')
@@ -197,8 +199,8 @@
       var original_image = $(this).css('background-image')
       bg = original_image.replace('url(','').replace(')','').replace(/\"/gi, "");
       $(this).data('image', bg)
-      $(this).css('background-image',"url(" + image + ")");
       $(this).css('background-size', 'cover')
+      $(this).css('background-image',"url(" + image + ")");
     })
   });
 </script>

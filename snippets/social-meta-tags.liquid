@@ -1,0 +1,62 @@
+<!-- /snippets/social-meta-tags.liquid -->
+<meta property="og:url" content="{{ canonical_url }}">
+<meta property="og:site_name" content="{{ shop.name }}">
+{% comment %}
+  Open graph tags
+{% endcomment %}
+{% if template contains 'product' %}
+  {% assign cf = product.metafields.c_f %}
+  {% if product.images.first %}
+    {% assign img = product.images.first %}
+  {% endif %}  
+{% elsif template contains 'collection' %}  
+  {% assign cf = collection.metafields.c_f %}
+{% elsif template contains 'article' %}
+  {% assign cf = article.metafields.c_f %}
+  {% if article.image %}
+    {% assign img = article.image%}
+  {% endif %}
+{% elsif template contains 'page' %}
+  {% assign cf = page.metafields.c_f %}
+{% endif %}
+
+
+{% comment %}
+  Twitter card
+{% endcomment %}
+{% unless settings.social_twitter_link == blank %}
+  <meta name="twitter:site" content="@{{ settings.social_twitter_link | split: 'twitter.com/' | last }}">
+{% endunless %}
+{% if template contains 'article' and article.image %}
+  <meta name="twitter:card" content="summary_large_image">
+{% else %}
+  <meta name="twitter:card" content="summary">
+{% endif %}
+{% if template == 'index' %}
+  <meta name="twitter:title" content="{{ page_title }}">
+  <meta name="twitter:description" content="{{ page_description | escape }}">
+{% elsif template contains 'product' %}
+  <meta name="twitter:title" content="{{ product.title | strip_html | escape }}">
+{% elsif template contains 'article' %}
+  <meta name="twitter:title" content="{{ article.title | strip_html | escape }}">
+{% elsif template contains 'page' %}
+  <meta name="twitter:title" content="{{ page.title | strip_html | escape }}">
+{% elsif template contains 'collection' %}  
+  <meta name="twitter:title" content="{{ collection.title | strip_html | escape }}">
+{% endif %}
+
+{% comment %}general tags for og and twitter{% endcomment %}
+
+<meta property="og:type" content="{% if cf.og_type %}{{cf.og_type}}{% else %}website{% endif%}">
+<meta property="og:title" content="{{ cf.og_title }}">
+{% if cf.og_image or img %}
+  <meta property="og:image" content="{% if cf.og_image %}{{ cf.og_image }}{% else %}https:{{ img.src | img_url: 'large' }}{% endif %}">
+{% endif %}
+<meta property="og:description" content="{% if cf.og_description %}{{cf.og_description}}{% else %}{{ page_description | escape }}{% endif %}">
+
+<meta name="twitter:description" content="{% if cf.twitter_text %}{{ cf.twitter_text }}{% else %}{{ page_description | escape }}{% endif %}">
+{% if cf.twitter_image or img %}
+  <meta name="twitter:image" content="{% if cf.twitter_image%}{{ cf.twitter_image }}{% else %}https:{{ img.src | img_url: 'large' }}{% endif %}">
+{% endif %}
+<meta name="twitter:image:width" content="600">
+<meta name="twitter:image:height" content="600">

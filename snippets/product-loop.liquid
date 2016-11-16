@@ -1,8 +1,8 @@
 
 <div class="product col--three {% cycle '','','','last' %}">
-  <div class="product-thumb" style="background-image: url({{ product.featured_image.src | product_img_url: 'grande' }}); background-repeat: no-repeat;  background-position: center center; background-size:contain; height: 300px; " data-adaptive-background data-ab-css-background>
+  <div class="product-thumb" >
     <a href="{{ product.url | within: collection }}">
-      {% comment %}<img src="{{ product.featured_image.src | product_img_url: 'grande' }}" alt="{{ product.featured_image.alt | escape }}" />{% endcomment %}
+      <img src="{{ product.featured_image.src | product_img_url: 'grande' }}" alt="{{ product.featured_image.alt | escape }}" data-adaptive-background data-ab-css-background />
       <div class="overlay hidden">
         <div class="content">
           <h3>VIEW</h3>
