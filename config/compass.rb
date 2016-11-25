@@ -4,6 +4,7 @@ javascripts_dir = "js"
 sourcemap = true
 output_style = :compressed
 
+
 # Saves css files as liquid
 on_stylesheet_saved do |filename|
   if File.exists?(filename)

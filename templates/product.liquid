@@ -19,7 +19,11 @@
   </div>
   <div class="product-details col--two left">
     <h2 class="product-header">{{ product.title }}</h2>
-    <p class="price-field">{{product.price | money }}</p>
+    {% if product.compare_at_price_max == 0 %}
+      <p class="price-field"> {{product.price | money }}</p>
+    {% else %}
+      <p class="price-field"><span class="compare-price">{{product.compare_at_price_max | money}}</span> {{product.price | money }}  </p>
+    {% endif %}
     <div class="product-desc rte">{{ product.description}}</div>
     <div class="container--flex margin-bottom-30">
       {% comment %}<form action="/cart/add" method="post" class="product-form" id="add-to-cart">{% endcomment %}
@@ -34,7 +38,7 @@
               <label for="product-select">{{ product.options.first }}</label>
               <select id="product-select" name="id">
                 {% for variant in product.variants %}
-                    <option value="{{ variant.id }}">{{ variant.title }} - {{ variant.price | money }}</option>
+                    <option value="{{ variant.id }}">{{ variant.title }} </option>
                 {% endfor %}
               </select>
             </div>
